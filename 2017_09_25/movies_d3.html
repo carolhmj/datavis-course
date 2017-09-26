@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dados de Filmes</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<div id="gross">
+	<h1>Filmes por Bilheteria</h1>
+</div>
+<div id="budget">
+	<h1>Filmes por Orçamento</h1>
+</div>
+<div id="profit">
+	<h1>Filmes por Lucro</h1>
+</div>
+<script type="text/javascript">
+	function render(data, chart, color, measureFunction, textFunction, comparator) {
+		let chartId = "#"+chart;
+		d3.select(chartId)
+		  .selectAll("div.h-bar")
+		  .data(data)
+		  .enter()
+		  .append("div")
+		  .attr("class","h-bar")
+		  .style("background-color",color)
+		  .append("span");
+
+		d3.select(chartId)
+		  .selectAll("div.h-bar")
+		  .style("width", measureFunction)
+		  .select("span")
+		  .text(textFunction);
+
+		if (comparator) {
+			d3.select(chartId)
+			  .selectAll("div.h-bar")
+			  .sort(comparator);
+		}    
+	}
+
+	//Comparação de lucro em ordem decrescente	
+	let grossCompare = function(a, b) {
+		return a.Worldwide_Gross_M < b.Worldwide_Gross_M? -1 : 1;
+	}
+	let grossMeasure = function(d) {
+		return (0.5 * d.Worldwide_Gross_M) + "px";
+	}
+	let filmNameText = function(d) {
+		return d.Film;
+	}
+	//Comparação de orçamento em ordem decrescente
+	let budgetCompare = function(a, b) {
+		return a.Budget_M < b.Budget_M? -1 : 1;
+	}
+	let budgetMeasure = function(d) {
+		return (2 * d.Budget_M) + "px";
+	}
+	//Comparação de lucro em ordem decrescente
+	function profit(data) {
+		return data.Worldwide_Gross_M - data.Budget_M;
+	}
+	let profitCompare = function(a, b) {
+		return profit(a) < profit(b)? -1 : 1;
+	}
+	let profitMeasure = function(d) {
+		return (0.5 * profit(d)) + "px";
+	}
+
+	d3.json("movies.json", function(error, json) {
+		render(json, "gross", "royalblue", grossMeasure, filmNameText, grossCompare);
+		render(json, "budget", "tomato", budgetMeasure, filmNameText, budgetCompare);
+		render(json, "profit", "brown", profitMeasure, filmNameText, profitCompare);
+	});
+</script>
+
+</body>
+</html>
