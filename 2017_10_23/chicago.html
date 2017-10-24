@@ -88,7 +88,7 @@
                                .group(timeDimGroup)
                                .colors(scale)
                                .seriesAccessor(function(d) {return "Type: " + d["Primary Type"];})
-                               .x(d3.scaleTime().domain([Math.min.apply(null, datesArray), Math.max.apply(null, datesArray)]));
+                               .x(d3.time.scale().domain([Math.min.apply(null, datesArray), Math.max.apply(null, datesArray)]));
 
                     dc.renderAll();
 
