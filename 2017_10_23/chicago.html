@@ -69,10 +69,10 @@
                     var facts = crossfilter(data);
 
                     var typeDimension = facts.dimension(function (d) {return d["Primary Type"]});
-                    var timeDimension = facts.dimension(function (d) {return d.Date});
+                    var timeTypeDimension = facts.dimension(function (d) {return [d3.time.day(d.Date), d["Primary Type"]]});
 
                     var typeDimCount = typeDimension.group();
-                    var timeDimGroup = timeDimension.group();
+                    var timeTypeCount = timeTypeDimension.group();
 
                     rowChart.width(1260)
                             .height(300)
@@ -84,10 +84,11 @@
                     seriesChart.width(1260)
                                .height(600)
                                .margins({top: 10, right: 10, bottom: 20, left: 40})
-                               .dimension(timeDimension)
-                               .group(timeDimGroup)
+                               .dimension(timeTypeDimension)
+                               .group(timeTypeCount)
                                .colors(scale)
-                               .seriesAccessor(function(d) {return "Type: " + d["Primary Type"];})
+                               .seriesAccessor(function(d) {return d.key[1];})
+                               .keyAccessor(function (d) {return d.key[0];})
                                .x(d3.time.scale().domain([Math.min.apply(null, datesArray), Math.max.apply(null, datesArray)]));
 
                     dc.renderAll();
