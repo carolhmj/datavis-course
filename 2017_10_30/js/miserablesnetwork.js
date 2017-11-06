@@ -1,7 +1,7 @@
 function Network() {
   var allData = [],
-      width = 960,
-      height = 800,
+      width = 800,
+      height = 700,
       // our force directed layout
       force = d3.layout.force(), 
       // these will point to the circles and lines
@@ -106,7 +106,9 @@ function Network() {
         .attr("r", function (d) {
           return d.radius;
         })
-        .style("stroke-width", 1.0);
+        .style("stroke-width", 1.0)
+        .style("stroke", "#1F618D")
+        .style("fill", "#2E86C1");
     node.on("mouseover", showDetails).on("mouseout", hideDetails);    
   }
 
