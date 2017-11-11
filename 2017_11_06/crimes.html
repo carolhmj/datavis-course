@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Número de homicídios em Fortaleza em 2012</title>
+	<title>Taxa de homicídios em Fortaleza em 2012</title>
 	<meta charset="UTF-8"> 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
@@ -55,7 +55,7 @@
 <body>
 
 <div class="container">
-	<h1> Número de Homicídios em Fortaleza em 2012</h1>
+	<h1>Homicídios em Fortaleza em 2012</h1>
 	<p>
 		Dados retirados do site da <a href="http://www.sspds.ce.gov.br/">SSPDS</a>.
 	</p>	
@@ -90,8 +90,8 @@
 
 	info.update = function (feat) {
             //console.log(feat);
-            this._div.innerHTML = '<h5>Número de homicídios</h5>' +  (feat ?
-				'<b>' + feat.properties.NOME + '</b><br />' + homicidiosByPop(feat.properties.NOME) + ' homicídios'
+            this._div.innerHTML = '<h5>Homicídios por 100000 habitantes</h5>' +  (feat ?
+				'<b>' + feat.properties.NOME + '</b><br/>' + homicidiosByPop(feat.properties.NOME) + ' homicídios'
 				: 'Passe o mouse sobre um bairro');
 	};
 
